@@ -182,6 +182,10 @@ namespace create {
     OC_QUERY_LIST=149,
     OC_STREAM = 148,
     OC_TOGGLE_STREAM = 150,
+    OC_SCRIPT = 152,
+    OC_PLAY_SCRIPT = 153,
+    OC_WAIT_DISTANCE = 156,
+    OC_WAIT_ANGLE = 157,
   };
 
   enum BAUDCODE {

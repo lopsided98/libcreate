@@ -208,6 +208,10 @@ namespace create {
        * \return true if successful, false otherwise
        */
       bool drive(const float& xVel, const float& angularVel);
+      
+      bool rotate(const float& angle, const float& angularVel);
+      
+      bool waitAngle(const float& angle);
 
       /**
        * \brief Set the power to the side brush motor.

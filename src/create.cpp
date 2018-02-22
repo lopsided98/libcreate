@@ -454,6 +454,27 @@ namespace create {
     float rightVel = xVel + ((model.getAxleLength() / 2.0) * angularVel);
     return driveWheels(leftVel, rightVel);
   }
+  
+  bool Create::rotate(const float& angle, const float& angularVel) {
+    uint8_t cmdScript[2] = { OC_SCRIPT,
+                              13
+                             };
+    serial->send(cmdScript, 2);
+    drive(0, angularVel);
+    waitAngle(angle);
+    drive(0, 0);
+    uint8_t cmd[1] = { OC_PLAY_SCRIPT };
+    serial->send(cmd, 1);
+  }
+
+  bool Create::waitAngle(const float& angle) {
+    int16_t angleDegrees = roundf((angle * 360) / (2 * util::PI));
+    uint8_t cmd[3] = { OC_DRIVE_PWM,
+                        angleDegrees >> 8,
+                        angleDegrees & 0xff,
+                       };
+    serial->send(cmd, 3);
+  } 
 
   bool Create::setAllMotors(const float& main, const float& side, const float& vacuum) {
     if (main < -1.0 || main > 1.0 ||

@@ -459,17 +459,17 @@ namespace create {
     uint8_t cmdScript[2] = { OC_SCRIPT,
                               13
                              };
-    serial->send(cmdScript, 2);
-    drive(0, angularVel);
-    waitAngle(angle);
-    drive(0, 0);
+    if (!serial->send(cmdScript, 2)) return false;
+    if (!drive(0, angularVel)) return false;
+    if (!waitAngle(angle)) return false;
+    if (!drive(0, 0)) return false;
     uint8_t cmd[1] = { OC_PLAY_SCRIPT };
-    serial->send(cmd, 1);
+    return serial->send(cmd, 1);
   }
 
   bool Create::waitAngle(const float& angle) {
-    int16_t angleDegrees = roundf((angle * 360) / (2 * util::PI));
-    uint8_t cmd[3] = { OC_DRIVE_PWM,
+    int16_t angleDegrees = roundf((angle * 360.0f) / (2.0f * util::PI));
+    uint8_t cmd[3] = { OC_WAIT_ANGLE,
                         angleDegrees >> 8,
                         angleDegrees & 0xff,
                        };
